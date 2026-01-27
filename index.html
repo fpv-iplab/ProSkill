@@ -67,30 +67,355 @@
           </div>
         </div>
 
-       
+        <p class="hero-description">
+          The first benchmark dataset for action-level skill assessment with fine-grained segment-level annotations
+          in complex procedural tasks. Provides absolute skill assessment annotations alongside pairwise ones.
+        </p>
         <div class="hero-buttons">
          
-          
+          <a class="btn btn-secondary" href="" target="_blank" rel="noopener">PDF</a>
           <button class="btn" id="openCitation" type="button"><i class="fas fa-quote-right"></i> Citation</button>
         </div>
       </div>
       <div class="hero-visual">
-        <div class="visual-placeholder coming-soon">
-          <i class="fas fa-rocket"></i>
-            <span style="color: #ff6b6b; font-weight: bold; text-shadow: 0 0 10px rgba(255, 107, 107, 0.5); animation: pulse 2s infinite;">Coming Soon</span>
-        </div>
+        <img src="img/paper/PROSKILL.gif" alt="PROSKILL Visual Overview" style="max-width: 100%; height: auto; border-radius: 8px;">
       </div>
     </div>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    
   </section>
 
- 
+  <main id="main">
+    <div class="layout">
+      <article class="paper">
+    <section id="abstract" class="section overview paper-section">
+      <h2>Abstract</h2>
+      <p>
+        Skill assessment in procedural videos is crucial for the objective evaluation of human performance in settings such as manufacturing and procedural daily tasks. Current research on skill assessment has predominantly focused on sports and lacks large-scale datasets for complex procedural activities. Existing studies typically involve only a limited number of actions, focusing either on pairwise assessments (e.g., A is better than B) or on binary labels (e.g., good execution vs needs improvement). In response to these shortcomings, we introduce PROSKILL, the first benchmark dataset for action-level skill assessment in procedural tasks. PROSKILL provides absolute skill assessment annotations, along with pairwise ones. This is enabled by a novel and scalable annotation protocol that allows for the creation of an absolute skill assessment ranking starting from pairwise assessments. This protocol leverages a Swiss Tournament scheme for efficient pairwise comparisons, which are then aggregated into consistent, continuous global scores using an ELO-based rating system. We use our dataset to benchmark the main state-of-the-art skill assessment algorithms, including both ranking-based and pairwise paradigms. The suboptimal results achieved by the current state-of-the-art highlight the challenges and thus the value of PROSKILL in the context of skill assessment for procedural videos
+      </p>
+    </section>
+
+    <section id="dataset" class="section stats paper-section">
+      <h2>The PROSKILL Dataset</h2>
+      <p>PROSKILL spans multiple domains with segment-level annotations enabling fine-grained skill assessment.</p>
+      <div class="full-width table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Subset</th>
+              <th>Clips</th>
+              <th>Actions</th>
+              <th>Hours</th>
+              <th>AVG ± STD (s)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ikea ASM</td>
+              <td>160</td>
+              <td>10</td>
+              <td>1.28</td>
+              <td>28.88 ± 19.69</td>
+            </tr>
+            <tr>
+              <td>Meccano</td>
+              <td>80</td>
+              <td>5</td>
+              <td>1.06</td>
+              <td>47.59 ± 21.45</td>
+            </tr>
+            <tr>
+              <td>Assembly101</td>
+              <td>560</td>
+              <td>35</td>
+              <td>5.49</td>
+              <td>35.30 ± 25.27</td>
+            </tr>
+            <tr>
+              <td>EgoExo4D</td>
+              <td>191</td>
+              <td>12</td>
+              <td>4.70</td>
+              <td>88.14 ± 90.93</td>
+            </tr>
+            <tr>
+              <td>EpicTent</td>
+              <td>144</td>
+              <td>9</td>
+              <td>1.59</td>
+              <td>39.71 ± 34.18</td>
+            </tr>
+            <tr class="total">
+              <td>Total</td>
+              <td>1135</td>
+              <td>71</td>
+              <td>14.12</td>
+              <td>44.75 ± 48.46</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="protocol" class="section examples paper-section">
+      <h2>Annotation Approach</h2>
+      <p>Three-stage protocol to convert pairwise judgments into absolute skill scores with stability over rounds.</p>
+      <div class="full-width figure-large">
+        <img src="img/paper/concept_clean_2-1.png" alt="Annotation protocol overview: Swiss Tournament pairing, AMT pairwise judgments, and ELO-based absolute scoring." />
+      </div>
+      <div class="stages">
+        <article class="stage">
+          <h3>Stage 1 — Pair Selection</h3>
+          <p>
+            We utilize a <strong>Swiss Tournament</strong> scheme to efficiently pair video segments, ensuring segments
+            with similar current standings face each other. This avoids trivial comparisons and maximizes robustness of
+            the collected judgments.
+          </p>
+        </article>
+        <article class="stage">
+          <h3>Stage 2 — Pairwise Ranking</h3>
+          <p>
+            Using a crowdsourcing platform (<strong>Amazon Mechanical Turk</strong>), qualified workers judge which of two
+            performances demonstrates higher skill, producing pairwise labels. In total, we collected
+            <strong>16,372 unique comparisons</strong> across datasets and rounds.
+          </p>
+        </article>
+        <article class="stage">
+          <h3>Stage 3 — Absolute Scoring</h3>
+          <p>
+            We leverage an <strong>ELO-based</strong> rating system—originally designed for chess—to aggregate pairwise
+            outcomes into consistent, continuous global scores and a final absolute ranking.
+          </p>
+        </article>
+      </div>
+      <p class="note">
+        The protocol ran for <strong>R = 6 rounds</strong>, achieving stable absolute ratings with convergent rankings in
+        subsets such as <em>IKEA Assembly</em> and <em>EgoExo4D</em>.
+      </p>
+    </section>
+
+    <section id="benchmarks" class="section benchmark paper-section" style="text-align:center;">
+
+      <h2 style="font-size:2rem; margin-bottom:1.2rem;">Results</h2>
+    
+      <div class="results-summary" style="max-width:900px; margin:0 auto 2rem auto;">
+        <p style="font-size:1rem; line-height:1.6; color:#efefef;">
+          We evaluate our models across <em>Ikea</em>, <em>Meccano</em>, <em>Assembly101</em>, <em>EgoExo4D</em>, and <em>EpicTent</em>.
+          Global models generally outperform pairwise setups in rank correlation, with <strong>CoFInAl</strong> reaching 
+          <strong>ρ = 0.59</strong> on <em>Meccano</em>. Pairwise tasks remain hardest on <em>Assembly101</em> (≈0.60 accuracy), while
+          textual conditioning with <em>MiniLM</em> brings consistent though moderate gains.
+        </p>
+      </div>
+    
+      <!-- GLOBAL RANKING -->
+      <div class="table-wrapper" style="display:flex; justify-content:center; margin-bottom:2rem;">
+        <table class="data-table" style="border-collapse:collapse; width:92%; max-width:1100px; text-align:center; font-size:0.95rem;">
+          <caption style="caption-side:top; font-style:italic; font-size:1rem; margin-bottom:.7rem;">
+            Spearman’s ρ for global ranking (<em>I3D</em> and <em>VideoMAE</em> features).
+          </caption>
+          <thead style="background-color:#003366; color:#fff;">
+            <tr>
+              <th>Method</th>
+              <th>Features</th>
+              <th>Ikea</th>
+              <th>Meccano</th>
+              <th>Assembly101</th>
+              <th>EgoExo4D</th>
+              <th>EpicTent</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td rowspan="2"><strong>USDL</strong></td><td><em>I3D</em></td><td>0.12</td><td>0.38</td><td>0.12</td><td>0.33</td><td>0.17</td></tr>
+            <tr class="sub-row"><td><em>VideoMAE</em></td><td>0.19</td><td><strong>0.43</strong></td><td>0.13</td><td><u>0.39</u></td><td>0.23</td></tr>
+    
+            <tr><td rowspan="2"><strong>DAE-AQA</strong></td><td><em>I3D</em></td><td>0.20</td><td>0.24</td><td>0.20</td><td>0.16</td><td>0.23</td></tr>
+            <tr class="sub-row"><td><em>VideoMAE</em></td><td>0.10</td><td><strong>0.42</strong></td><td>0.03</td><td>0.33</td><td><u>0.26</u></td></tr>
+    
+            <tr><td rowspan="2"><strong>CoFInAl</strong></td><td><em>I3D</em></td><td><u>0.26</u></td><td><strong><u>0.59</u></strong></td><td>0.14</td><td>0.20</td><td>0.21</td></tr>
+            <tr class="sub-row"><td><em>VideoMAE</em></td><td><u>0.26</u></td><td>0.31</td><td>0.11</td><td>0.28</td><td>0.23</td></tr>
+    
+            <tr><td rowspan="2"><strong>AQA-TPT</strong></td><td><em>I3D</em></td><td>0.14</td><td>0.12</td><td>-0.02</td><td>0.17</td><td>-0.01</td></tr>
+            <tr class="sub-row"><td><em>VideoMAE</em></td><td>0.21</td><td>0.35</td><td>0.15</td><td><strong>0.36</strong></td><td>-0.01</td></tr>
+    
+            <tr><td rowspan="2"><strong>CoRe</strong></td><td><em>I3D</em></td><td>0.22</td><td>-0.12</td><td><u>0.22</u></td><td>0.33</td><td>0.04</td></tr>
+            <tr class="sub-row"><td><em>VideoMAE</em></td><td>0.19</td><td>0.24</td><td>0.06</td><td><strong>0.35</strong></td><td>0.12</td></tr>
+    
+            <tr style="font-weight:600; background:rgba(0,0,0,0.05);">
+              <td rowspan="2"><strong>Average</strong></td><td><em>I3D</em></td><td>0.20</td><td>0.24</td><td>0.13</td><td>0.24</td><td>0.13</td></tr>
+            <tr class="sub-row" style="font-weight:600; background:rgba(0,0,0,0.05);"><td><em>VideoMAE</em></td><td>0.20</td><td>0.35</td><td>0.10</td><td>0.34</td><td>0.17</td></tr>
+          </tbody>
+        </table>
+      </div>
+    
+      <!-- SINGLE ACTION VS UNIFIED -->
+      <div class="table-wrapper" style="display:flex; justify-content:center; margin-bottom:2rem;">
+        <table class="data-table" style="border-collapse:collapse; width:85%; max-width:950px; text-align:center; font-size:0.95rem;">
+          <caption style="caption-side:top; font-style:italic; font-size:1rem; margin-bottom:.7rem;">
+            Single-action vs unified model (<strong>USDL</strong>).
+          </caption>
+          <thead style="background-color:#003366; color:white;">
+            <tr><th>Method</th><th>Features</th><th>Ikea</th><th>Meccano</th><th>Assembly101</th><th>EgoExo4D</th><th>EpicTent</th></tr>
+          </thead>
+          <tbody>
+            <tr><td rowspan="2"><strong>USDL</strong></td><td><em>I3D</em></td><td>0.12</td><td>0.38</td><td>0.12</td><td>0.33</td><td>0.17</td></tr>
+            <tr class="sub-row"><td><em>VideoMAE</em></td><td>0.19</td><td>0.43</td><td><u>0.13</u></td><td>0.39</td><td><u>0.23</u></td></tr>
+            <tr><td rowspan="2"><strong>USDL-Single</strong></td><td><em>I3D</em></td><td>-0.18</td><td>0.09</td><td>-0.09</td><td>0.19</td><td>0.17</td></tr>
+            <tr class="sub-row"><td><em>VideoMAE</em></td><td>0.08</td><td>0.01</td><td>-0.31</td><td>0.04</td><td>0.06</td></tr>
+          </tbody>
+        </table>
+      </div>
+    
+      <!-- TEXTUAL GROUNDING -->
+      <div class="table-wrapper" style="display:flex; justify-content:center;">
+        <table class="data-table" style="border-collapse:collapse; width:85%; max-width:950px; text-align:center; font-size:0.95rem;">
+          <caption style="caption-side:top; font-style:italic; font-size:1rem; margin-bottom:.7rem;">
+            Textual grounding with <em>MiniLM</em> (<strong>USDL</strong>).
+          </caption>
+          <thead style="background-color:#003366; color:white;">
+            <tr><th>Method</th><th>Features</th><th>Ikea</th><th>Meccano</th><th>Assembly101</th><th>EgoExo4D</th><th>EpicTent</th></tr>
+          </thead>
+          <tbody>
+            <tr><td rowspan="2"><strong>USDL</strong></td><td><em>I3D</em></td><td>0.19</td><td>0.38</td><td>0.12</td><td>0.33</td><td>0.17</td></tr>
+            <tr class="sub-row"><td><em>VideoMAE</em></td><td>0.22</td><td>0.43</td><td><u>0.13</u></td><td>0.39</td><td><u>0.23</u></td></tr>
+            <tr><td rowspan="2"><strong>USDL + Grounding</strong></td><td><em>I3D + MiniLM</em></td><td>0.24</td><td>0.36</td><td>0.12</td><td>0.33</td><td>0.20</td></tr>
+            <tr class="sub-row"><td><em>VideoMAE + MiniLM</em></td><td><u>0.27</u></td><td><u>0.50</u></td><td><u>0.13</u></td><td><u>0.41</u></td><td>0.18</td></tr>
+          </tbody>
+        </table>
+      </div>
+    
+    </section>
+    
+    <style>
+      #benchmarks .data-table th, 
+      #benchmarks .data-table td {
+        padding: 0.55rem 0.8rem;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+      }
+      #benchmarks .data-table tr.sub-row td {
+        font-style: italic;
+        color: #9c9c9c;
+      }
+      #benchmarks .data-table td em {
+        color: #0056ac;
+        font-weight: 500;
+      }
+      #benchmarks .data-table caption {
+        letter-spacing: .2px;
+      }
+      #benchmarks table tbody tr:hover {
+        background-color: rgba(0, 50, 150, 0.05);
+        transition: background 0.2s ease;
+      }
+    </style>
+    
   
 
+    <section id="download" class="section download paper-section">
+      <h2>Download</h2>
+      <p>Get the dataset, benchmark, documentation, and code.</p>
+      <div class="full-width download-grid">
+        <a class="btn big primary" href="https://github.com/fpv-iplab/ProSKILL_WACV/tree/main/AMT_results" download>
+          <i class="fas fa-file-signature"></i>
+          <span>Download Rankings</span>
+        </a>
+        <a class="btn big" href="#" download>
+          <i class="fas fa-video"></i>
+          <span>Download Videos</span>
+        </a>
+        <a class="btn big" href="https://github.com/fpv-iplab/ProSKILL_WACV" target="_blank" rel="noopener">
+          <i class="fab fa-github"></i>
+          <span>View GitHub Repository</span>
+        </a>
+        
+      </div>
+    </section>
+    <section id="people" class="section people paper-section">
+      <h2>People</h2>
+      <div class="full-width people-grid">
+        <div class="person-card">
+          <div class="person-image"><img src="img/faces/MM.jpg" alt="Michele Mazzamuto" /></div>
+          <h3>Michele Mazzamuto</h3>
+          <p class="affiliation">IPLAB, University of Catania</p>
+        </div>
+        <div class="person-card">
+          <div class="person-image"><img src="img/faces/DDM.jpg" alt="Daniele Di Mauro" /></div>
+          <h3>Daniele Di Mauro</h3>
+          <p class="affiliation">Next Vision s.r.l., Italy</p>
+        </div>
+        <div class="person-card">
+          <div class="person-image"><img src="img/faces/GF.jpg" alt="Gianpiero Francesca" /></div>
+          <h3>Gianpiero Francesca</h3>
+          <p class="affiliation">Toyota Motor Europe, Belgium</p>
+        </div>
+        <div class="person-card">
+          <div class="person-image"><img src="img/faces/GMF.jpg" alt="Giovanni Maria Farinella" /></div>
+          <h3>Giovanni Maria Farinella</h3>
+          <p class="affiliation">IPLAB, University of Catania</p>
+        </div>
+        <div class="person-card">
+          <div class="person-image"><img src="img/faces/AF.jpg" alt="Antonino Furnari" /></div>
+          <h3>Antonino Furnari</h3>
+          <p class="affiliation">IPLAB, University of Catania</p>
+        </div>
+      </div>
+    </section>
+    <section id="resources" class="section download paper-section">
+      <h2>Resources and Acknowledgements</h2>
+      <ul class="keypoints">
+        <li><strong>Availability</strong>: Labels, code implementing the annotation protocol, and experimental pipelines will be publicly released.</li>
+        <li><strong>Support</strong>: Supported by Toyota Motor Europe, Next Vision s.r.l., and the project Future Artificial Intelligence Research (FAIR).</li>
+      </ul>
+      <div class="cta">
+        <a class="btn primary" href="" target="_blank" rel="noopener">Read the Paper</a>
+      </div>
+    </section>
+
+    <section id="citation" class="section citation paper-section">
+      <h2>Citation</h2>
+      <p>If you find this work useful, please cite our paper:</p>
+      <div class="citation-box">
+        <pre id="citation-text" class="code-block">@inproceedings{mazzamuto2025proskill,
+  title={PROSKILL: Segment-Level Skill Assessment in Procedural Videos},
+  author={Mazzamuto, Michele and Di Mauro, Daniele and Francesca, Gianpiero and Farinella, Giovanni Maria and Furnari, Antonino},
+  booktitle={Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)},
+  year={2025}
+}</pre>
+        <div class="citation-actions">
+            <button id="copyCitationBtnOnPage" class="btn primary">
+             <i class="fas fa-copy"></i> Copy BibTeX
+            </button>
+        </div>
+      </div>
+    </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PROSKILL Project • Designed for clarity, accessibility, and reproducibility.</p>
+  </footer>
+
+  <button id="backToTop" class="back-to-top" aria-label="Back to top">↑</button>
 
   <!-- Citation Modal -->
-  
+  <div id="citationModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="citationTitle">
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-content" role="document">
+      <div class="modal-header">
+        <h3 id="citationTitle">Cite PROSKILL</h3>
+        <button class="modal-close" type="button" aria-label="Close" data-close>×</button>
+      </div>
+      <div class="modal-body">
+        <pre id="bibtex" class="code-block">@inproceedings{mazzamuto2025proskill,
+  title={PROSKILL: Segment-Level Skill Assessment in Procedural Videos},
+  author={Mazzamuto, Michele and Di Mauro, Daniele and Francesca, Gianpiero and Farinella, Giovanni Maria and Furnari, Antonino},
+  booktitle={Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)},
+  year={2025}
+}</pre>
+      </div>
+      <div class="modal-footer">
+        <button id="copyBibtex" class="btn primary" type="button"><i class="fas fa-copy"></i> Copy BibTeX</button>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

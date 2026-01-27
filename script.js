@@ -71,5 +71,20 @@
       }
     });
   }
+
+  const copyCitationBtnOnPage = document.getElementById('copyCitationBtnOnPage');
+  if (copyCitationBtnOnPage) {
+    copyCitationBtnOnPage.addEventListener('click', async () => {
+      const text = document.getElementById('citation-text')?.innerText || '';
+      try {
+        await navigator.clipboard.writeText(text);
+        const originalHTML = copyCitationBtnOnPage.innerHTML;
+        copyCitationBtnOnPage.textContent = 'Copied!';
+        setTimeout(() => { copyCitationBtnOnPage.innerHTML = '<i class="fas fa-copy"></i> Copy BibTeX'; }, 1200);
+      } catch (e) {
+        console.error('Copy failed', e);
+      }
+    });
+  }
 })();
 
